@@ -1,4 +1,4 @@
-var http = require('http'), 
+var http = require('http'),
     handler = function(req, res) {
         if (req.url === '/'){
             res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -8,13 +8,24 @@ var http = require('http'),
             res.end('This is the marketing page.\n');
         } else if (req.url === '/uploads') {
             if (req.method === 'POST') {
-                console.log('Handling an upload');
-                res.writeHead(200, {'Content-Type': 'text/plain'});
-                res.end('Handling the upload\n');
+                var upload = "";
+
+                req.on('data', function(chunk){
+                  upload += chunk;
+                  console.log('chunk: ', chunk);
+                });
+
+                req.on('end', function(){
+                  console.log('Handling an upload of length ', upload.length);
+                  res.writeHead(200, {'Content-Type': 'text/plain'});
+                  res.end('Handling the upload\n');
+                });
+
             } else {
                 res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end('<html><head><title>Uploads</title></head><body><form action="/uploads" method="POST">' + 
-                        '<input type="file" name="the_file"><input type="submit" value="Upload">' + 
+                res.end('<html><head><title>Uploads</title></head><body>' +
+                        '<form action="/uploads" method="POST" enctype="multipart/form-data">' +
+                        '<input type="file" name="the_file"><input type="submit" value="Upload">' +
                         '</form></body></html>\n');
             }
         } else {
