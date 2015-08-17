@@ -1,40 +1,56 @@
-var http = require('http'),
-    handler = function(req, res) {
-        if (req.url === '/'){
-            res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Hello World\n');
-        } else if (req.url === '/marketing') {
-            res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('This is the marketing page.\n');
-        } else if (req.url === '/uploads') {
-            if (req.method === 'POST') {
-                var upload = "";
+var express = require('express'),
+    app     = express(),
+    port    = process.env.PORT || 3000;
 
-                req.on('data', function(chunk){
-                  upload += chunk;
-                  console.log('chunk: ', chunk);
-                });
+    function home(req,res) {
+      res.setHeader('Content-Type', 'text/html');
+      res.send( '<html><head><title>NodeSlash</title></head>' +
+                '<body><h1>The Web\'s Premiere Browser Game</h1>' +
+                '<a href="/adventures">Go to adventures</a></body></html>');
+    }
 
-                req.on('end', function(){
-                  console.log('Handling an upload of length ', upload.length);
-                  res.writeHead(200, {'Content-Type': 'text/plain'});
-                  res.end('Handling the upload\n');
-                });
+    function adventuresIndex(req,res) {
+      res.setHeader('Content-Type', 'text/html');
+      res.send( '<html><head><title>Adventures - NodeSlash</title></head>' +
+                '<body><h1>Are you brave?</h1>' +
+                '<form action="adventures" method="POST">' +
+                '<button type="submit">Yes, I am brave</button></form>' +
+                '</body></html>');
+    }
 
-            } else {
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end('<html><head><title>Uploads</title></head><body>' +
-                        '<form action="/uploads" method="POST" enctype="multipart/form-data">' +
-                        '<input type="file" name="the_file"><input type="submit" value="Upload">' +
-                        '</form></body></html>\n');
-            }
-        } else {
-            res.writeHead(404, {'Content-Type': 'text/plain'});
-            res.end('Page not found\n');
-        }
-    },
-    server = http.createServer(handler);
+    function createAdventure(req,res) {
+      res.setHeader('Content-Type', 'text/html');
+      res.send( '<html><head><title>Adventures - NodeSlash</title></head>' +
+                '<body><h1>You are brave.</h1>' +
+                '<form action="adventures" method="POST">' +
+                '<button type="submit">Again!</button></form>' +
+                '<p>You have found some <a href="/loot/1">loot.</a></p>' +
+                '</body></html>');
+    }
 
-server.listen(1337);
+    function updateAdventure(req,res) {
+      res.setHeader('Content-Type', 'text/html');
+      res.send( '<html><head><title>Adventures - NodeSlash</title></head>' +
+                '<body><h1>It\'s a secret to everybody.</h1></body></html>');
+    }
 
-console.log('Server running at http://0.0.0.0:1337');
+    function showLoot(req,res) {
+      var id = req.params.id;
+      res.setHeader('Content-Type', 'text/html');
+      res.send( '<html><head><title>Adventures - NodeSlash</title></head>' +
+                '<body><h1>Ogre-slaying knife</h1>' +
+                '<p>It has +9 against ogres. It was id #' + id +
+                '</p></body></html>');
+    }
+
+    // Routes
+    app.get('/',               home);
+    app.get('/adventures',     adventuresIndex);
+    app.post('/adventures',    createAdventure);
+    app.put('/adventures/:id', updateAdventure);
+    app.get('/loot/:id',       showLoot);
+
+
+app.listen(port);
+
+console.log('Server running at http://0.0.0.0:' + port + '/');
