@@ -31,6 +31,11 @@ global.App = {
   }
 };
 
+// Use Jade for Views
+App.app.set('views', App.appPath('app/views'));
+App.app.set('view engine', 'jade');
+App.app.set('view options', {pretty: env === 'development'});
+
 // Middleware
 App.app.use(express.bodyParser());
 App.app.use(express.methodOverride());

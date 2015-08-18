@@ -1,0 +1,8 @@
+extends ../layouts/home
+
+block content
+  h1 You are brave
+  form(action="adventures", method="POST")
+    button(type="submit") Again!
+  p You have found some 
+    a(href="/loot/1") loot.
