@@ -8,6 +8,9 @@ module.exports = function (app) {
   app.post('/adventures',     adventuresRoutes.create);
   app.put('/adventures/:id',  adventuresRoutes.update);
 
+  var bestiaryRoutes = App.route('bestiaryRoutes');
+  app.get('/bestiary', bestiaryRoutes.index);
+
   var lootRoutes = App.route('lootRoutes');
   app.get('/loot/:id',        lootRoutes.show);
 };

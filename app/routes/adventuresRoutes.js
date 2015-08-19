@@ -1,6 +1,6 @@
 exports.index = function index(req,res) {
   var user = {username: "Apophis"};
-  res.render('adventures/index', {user: user});
+  res.render('adventures/index', {user: user, title: 'Adventures - NodeSlash'});
 };
 
 exports.create = function create(req,res) {

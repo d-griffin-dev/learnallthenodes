@@ -28,13 +28,17 @@ global.App = {
   },
   route: function (path) {
     return this.require('app/routes/' + path);
-  }
+  },
+  util: function (path) {
+    return this.require('app/utils/' + path);
+  },
 };
 
 // Use Jade for Views
 App.app.set('views', App.appPath('app/views'));
 App.app.set('view engine', 'jade');
 App.app.set('view options', {pretty: env === 'development'});
+App.app.locals({bossify: App.util('bossify')});
 
 // Middleware
 App.app.use(express.bodyParser());

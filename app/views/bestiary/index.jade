@@ -1,0 +1,28 @@
+extends ../layouts/home
+
+mixin beastRow(beast)
+  tr(id="beast-#{beast.id}")
+    td= beast.name
+    td= beast.strength
+    td= beast.hp
+    td= beast.gold
+
+block content
+  h1 The Beasts
+  
+  - if (beasts.length > 0)
+    p There are some beasts.
+  - else
+    p Sorry, there are no beasts.
+  
+  table
+    thead
+      tr
+        th Name
+        th Strength
+        th Hit Points
+        th Gold
+    tbody
+      -each beast in beasts
+        +beastRow(beast)
+      
