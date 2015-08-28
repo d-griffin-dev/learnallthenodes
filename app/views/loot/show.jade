@@ -1,3 +1,5 @@
+extends ../layouts/home
+
 block content
-  h1 Ogre-slaying knife
-    p It has +9 against ogres. It was id ##{lootID}
+  h1= loot.name
+  p= loot.description

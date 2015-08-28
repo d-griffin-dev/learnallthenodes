@@ -9,8 +9,9 @@ module.exports = function (app) {
   app.put('/adventures/:id',  adventuresRoutes.update);
 
   var bestiaryRoutes = App.route('bestiaryRoutes');
-  app.get('/bestiary', bestiaryRoutes.index);
+  app.get('/bestiary',        bestiaryRoutes.index);
 
   var lootRoutes = App.route('lootRoutes');
+  app.get('/loot',            lootRoutes.index);
   app.get('/loot/:id',        lootRoutes.show);
 };
