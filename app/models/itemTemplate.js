@@ -5,6 +5,8 @@ var schema = mongoose.Schema({
   description: String
 });
 
+schema.set('autoIndex', App.env !== 'production');
+
 var Model = mongoose.model('ItemTemplate', schema);
 
 module.exports = Model;

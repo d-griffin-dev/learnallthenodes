@@ -1,0 +1,13 @@
+extends ../layouts/home.jade
+
+block content
+  h1 Join the web's premiere adventure venue
+
+  form.form-horizontal(action="/sign_up", method="post")
+    .form-group
+      label.control-label.col-sm-2 Email
+      .col-sm-10
+        input(type="email", name="email")
+    .form-gorup
+      .col-sm-offset-2
+        button(type="submit") Start your adventure
